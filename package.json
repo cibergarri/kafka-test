@@ -4,9 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "topics": "node ./topics",
+    "dev": "nodemon ./producer",
     "start": "node ./producer",
     "consume": "node ./consumer",
-    "dev": "nodemon ./producer"
+    "stream-producer": "node ./streams/producer",
+    "stream-consumer-1": "node ./streams/consumer",
+    "stream-consumer-2": "node ./streams/consumer/final"
   },
   "repository": {
     "type": "git",
@@ -19,7 +23,8 @@
   },
   "homepage": "https://github.com/cibergarri/kafka-test#readme",
   "dependencies": {
-    "kafka-node": "5.0.0"
+    "kafka-node": "5.0.0",
+    "loadash": "1.0.0"
   },
   "devDependencies": {
     "eslint": "6.8.0",
