@@ -30,6 +30,7 @@ const messageTransform = new Transform({
   decodeStrings: true,
   transform (message, encoding, callback) {
     console.log(`Received rebalanced message ${message.value}`);
+    callback()
   }
 });
  

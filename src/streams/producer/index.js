@@ -1,4 +1,4 @@
-const kafka         = require("kafka-node");
+const kafka         = require('kafka-node');
 const { Transform } = require('stream');
 const _             = require('lodash');
 
@@ -16,6 +16,9 @@ const {
 } = kafka;
 
 const kafkaClient = new Client({kafkaHost});
+// to avoid BrokerNotAvailableError: Could not find the leader Error on first message
+// kafkaClient.refreshMetadata();
+
 const producer = new ProducerStream(kafkaClient);
 
 const stdinTransform = new Transform({

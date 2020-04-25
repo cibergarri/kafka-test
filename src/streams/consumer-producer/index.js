@@ -27,6 +27,8 @@ const consumerOptions = {
 };
 
 const kafkaClient = new Client({kafkaHost});
+// to avoid BrokerNotAvailableError: Could not find the leader Error on first message
+// kafkaClient.refreshMetadata();
 const resultProducer = new ProducerStream(kafkaClient);
 const consumerGroup = new ConsumerGroupStream(consumerOptions, kafkaTopic);
  

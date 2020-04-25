@@ -10,6 +10,8 @@ const {
 const preffix = process.argv.slice(2).pop() || 'def';
 
 const client = new Client({kafkaHost: config.kafkaHost });
+// to avoid BrokerNotAvailableError: Could not find the leader Error on first message
+client.refreshMetadata();
 
 const fetchRequests = [{
   topic: `${preffix}-${config.kafkaTopic}`,

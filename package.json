@@ -4,13 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "topics": "node ./topics",
-    "dev": "nodemon ./producer",
-    "start": "node ./producer",
-    "consume": "node ./consumer",
-    "stream-producer": "node ./streams/producer",
-    "stream-consumer-1": "node ./streams/consumer",
-    "stream-consumer-2": "node ./streams/consumer/final"
+    "topics": "node ./src/topics",
+    "dev": "nodemon ./src/producer",
+    "start": "node ./src/producer",
+    "consume": "node ./src/consumer",
+    "stream-producer": "node ./src/streams/producer",
+    "stream-consumer-producer": "node ./src/streams/consumer-producer",
+    "stream-consumer": "node ./src/streams/final-consumer"
   },
   "repository": {
     "type": "git",
