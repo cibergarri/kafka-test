@@ -11,15 +11,14 @@ const {
 } = config;
 
 const {
-  KafkaClient: Client,
   ProducerStream,
 } = kafka;
 
 console.log({kafkaClientId});
 
-const kafkaClient = new Client({kafkaHost, clientId: kafkaClientId});
+const kafkaClientOptions = { kafkaHost, clientId: kafkaClientId };
 
-const producer = new ProducerStream(kafkaClient);
+const producer = new ProducerStream({ kafkaClient: kafkaClientOptions });
 
 const stdinTransform = new Transform({
   objectMode: true,

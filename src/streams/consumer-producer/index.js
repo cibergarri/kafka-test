@@ -11,7 +11,6 @@ const {
 } = config;
 
 const {
-  KafkaClient: Client,
   ProducerStream,
   ConsumerGroupStream,
 } = kafka;
@@ -26,12 +25,14 @@ const consumerOptions = {
   fromOffset: 'latest'
 };
 
+console.log({kafkaHost});
 console.log({kafkaClientId});
 
-const kafkaClient = new Client({kafkaHost, clientId: kafkaClientId});
+const kafkaClientOptions = { kafkaHost, clientId: kafkaClientId };
+
 // to avoid BrokerNotAvailableError: Could not find the leader Error on first message
 // kafkaClient.refreshMetadata();
-const resultProducer = new ProducerStream(kafkaClient);
+const resultProducer = new ProducerStream({ kafkaClient: kafkaClientOptions });
 const consumerGroup = new ConsumerGroupStream(consumerOptions, `${kafkaClientId}-${kafkaTopic}`);
  
 const messageTransform = new Transform({
