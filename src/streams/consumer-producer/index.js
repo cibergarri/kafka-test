@@ -18,19 +18,21 @@ const {
 
 const consumerOptions = {
   kafkaHost,
-  groupId: 'ExampleTestGroup',
+  groupId: kafkaClientId,
   sessionTimeout: 15000,
   protocol: ['roundrobin'],
   asyncPush: false,
-  id: 'consumer1',
+  id: kafkaClientId,
   fromOffset: 'latest'
 };
 
-const kafkaClient = new Client({kafkaHost});
+console.log({kafkaClientId});
+
+const kafkaClient = new Client({kafkaHost, clientId: kafkaClientId});
 // to avoid BrokerNotAvailableError: Could not find the leader Error on first message
 // kafkaClient.refreshMetadata();
 const resultProducer = new ProducerStream(kafkaClient);
-const consumerGroup = new ConsumerGroupStream(consumerOptions, kafkaTopic);
+const consumerGroup = new ConsumerGroupStream(consumerOptions, `${kafkaClientId}-${kafkaTopic}`);
  
 const messageTransform = new Transform({
   objectMode: true,
@@ -38,7 +40,7 @@ const messageTransform = new Transform({
   transform (message, encoding, callback) {
     console.log(`Received message ${message.value} -> transforming input`);
     callback(null, {
-      topic: `Rebalance-${kafkaTopic}`,
+      topic: `${kafkaClientId}-Rebalance-${kafkaTopic}`,
       messages: `You have received and rebalanced this message: (${message.value})`
     });
   }

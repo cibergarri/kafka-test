@@ -38,3 +38,15 @@ docker exec kafka /opt/kafka_2.11-0.10.1.0/bin/kafka-topics.sh --list --zookeepe
 Docker info from:
 https://gist.github.com/abacaphiliac/f0553548f9c577214d16290c2e751071
 
+
+
+Known Issues:
+
+First time you create a message in a topic you get this error:
+
+'Could not find the leader'
+
+Documentation advises to use this command to fix it:
+
+kafkaClient.refreshMetadata();
+

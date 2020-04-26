@@ -16,14 +16,17 @@ const {
 
 const consumerOptions = {
   kafkaHost,
-  groupId: 'ExampleRebalancedTestGroup',
+  groupId: kafkaClientId,
   sessionTimeout: 15000,
   protocol: ['roundrobin'],
   asyncPush: false,
-  id: 'consumer2',
+  id: kafkaClientId,
   fromOffset: 'latest'
 };
-const consumerGroup = new ConsumerGroupStream(consumerOptions, `Rebalance-${kafkaTopic}`);
+
+console.log({kafkaClientId});
+
+const consumerGroup = new ConsumerGroupStream(consumerOptions, `${kafkaClientId}-Rebalance-${kafkaTopic}`);
  
 const messageTransform = new Transform({
   objectMode: true,

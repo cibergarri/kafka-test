@@ -15,9 +15,9 @@ const {
   ProducerStream,
 } = kafka;
 
-const kafkaClient = new Client({kafkaHost});
-// to avoid BrokerNotAvailableError: Could not find the leader Error on first message
-// kafkaClient.refreshMetadata();
+console.log({kafkaClientId});
+
+const kafkaClient = new Client({kafkaHost, clientId: kafkaClientId});
 
 const producer = new ProducerStream(kafkaClient);
 
@@ -26,9 +26,9 @@ const stdinTransform = new Transform({
   decodeStrings: true,
   transform (text, encoding, callback) {
     text = _.trim(text);
-    console.log(`pushing message ${text} to ${kafkaTopic}`);
+    console.log(`pushing message ${text} to ${kafkaClientId}-${kafkaTopic}`);
     callback(null, {
-      topic: kafkaTopic,
+      topic: `${kafkaClientId}-${kafkaTopic}`,
       messages: text
     });
   }
