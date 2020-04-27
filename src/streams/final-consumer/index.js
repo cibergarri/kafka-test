@@ -2,11 +2,11 @@
 const kafka = require("kafka-node");
 const { Transform } = require('stream');
  
-const config = require('../config');
+const config = require('../../config');
 
 const {
   kafkaClientId,
-  kafkaTopic,
+  kafkaStreamsTopic,
   kafkaHost,
 } = config;
 
@@ -26,7 +26,7 @@ const consumerOptions = {
 
 console.log({kafkaClientId});
 
-const consumerGroup = new ConsumerGroupStream(consumerOptions, `${kafkaClientId}-Rebalance-${kafkaTopic}`);
+const consumerGroup = new ConsumerGroupStream(consumerOptions, `${kafkaClientId}-Rebalance-${kafkaStreamsTopic}`);
  
 const messageTransform = new Transform({
   objectMode: true,

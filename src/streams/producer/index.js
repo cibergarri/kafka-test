@@ -2,11 +2,11 @@ const kafka         = require('kafka-node');
 const { Transform } = require('stream');
 const _             = require('lodash');
 
-const config = require('../config');
+const config = require('../../config');
 
 const {
   kafkaClientId,
-  kafkaTopic,
+  kafkaStreamsTopic,
   kafkaHost,
 } = config;
 
@@ -25,9 +25,9 @@ const stdinTransform = new Transform({
   decodeStrings: true,
   transform (text, encoding, callback) {
     text = _.trim(text);
-    console.log(`pushing message ${text} to ${kafkaClientId}-${kafkaTopic}`);
+    console.log(`pushing message ${text} to ${kafkaClientId}-${kafkaStreamsTopic}`);
     callback(null, {
-      topic: `${kafkaClientId}-${kafkaTopic}`,
+      topic: `${kafkaClientId}-${kafkaStreamsTopic}`,
       messages: text
     });
   }

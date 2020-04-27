@@ -2,11 +2,11 @@
 const kafka = require("kafka-node");
 const { Transform } = require('stream');
  
-const config = require('../config');
+const config = require('../../config');
 
 const {
   kafkaClientId,
-  kafkaTopic,
+  kafkaStreamsTopic,
   kafkaHost,
 } = config;
 
@@ -25,15 +25,12 @@ const consumerOptions = {
   fromOffset: 'latest'
 };
 
-console.log({kafkaHost});
-console.log({kafkaClientId});
-
 const kafkaClientOptions = { kafkaHost, clientId: kafkaClientId };
 
 // to avoid BrokerNotAvailableError: Could not find the leader Error on first message
 // kafkaClient.refreshMetadata();
 const resultProducer = new ProducerStream({ kafkaClient: kafkaClientOptions });
-const consumerGroup = new ConsumerGroupStream(consumerOptions, `${kafkaClientId}-${kafkaTopic}`);
+const consumerGroup = new ConsumerGroupStream(consumerOptions, `${kafkaClientId}-${kafkaStreamsTopic}`);
  
 const messageTransform = new Transform({
   objectMode: true,
@@ -41,7 +38,7 @@ const messageTransform = new Transform({
   transform (message, encoding, callback) {
     console.log(`Received message ${message.value} -> transforming input`);
     callback(null, {
-      topic: `${kafkaClientId}-Rebalance-${kafkaTopic}`,
+      topic: `${kafkaClientId}-Rebalance-${kafkaStreamsTopic}`,
       messages: `You have received and rebalanced this message: (${message.value})`
     });
   }
