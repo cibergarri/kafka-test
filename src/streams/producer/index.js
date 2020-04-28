@@ -3,8 +3,10 @@ const { Transform } = require('stream');
 const _             = require('lodash');
 
 const config = require('../../config');
+const { Message } = require('../types');
 
 const {
+  messageType,
   kafkaClientId,
   kafkaStreamsTopic,
   kafkaHost,
@@ -15,6 +17,7 @@ const {
 } = kafka;
 
 console.log({kafkaClientId});
+console.log({config});
 
 const kafkaClientOptions = { kafkaHost, clientId: kafkaClientId };
 
@@ -25,10 +28,16 @@ const stdinTransform = new Transform({
   decodeStrings: true,
   transform (text, encoding, callback) {
     text = _.trim(text);
+    const messages = Message.toBuffer({
+      importance: messageType,
+      text,
+    }); 
     console.log(`pushing message ${text} to ${kafkaClientId}-${kafkaStreamsTopic}`);
+    // console.log({messages});
+    // console.log({ deserialized: Message.fromBuffer(messages) });
     callback(null, {
       topic: `${kafkaClientId}-${kafkaStreamsTopic}`,
-      messages: text
+      messages,
     });
   }
 });

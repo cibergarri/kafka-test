@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/cibergarri/kafka-test#readme",
   "dependencies": {
+    "avsc": "5.4.21",
     "kafka-node": "5.0.0",
     "loadash": "1.0.0"
   },
