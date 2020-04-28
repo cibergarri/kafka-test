@@ -73,7 +73,7 @@ npm run consume dev
 
 You can create a different preffixed consumer and producer and they will be indepedent
 
-### Streams:
+### Streams with AVRO serialization/deserialzation:
 
  - Run Producer:
 ```
